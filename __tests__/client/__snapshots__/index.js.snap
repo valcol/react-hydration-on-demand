@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`With SSR Render correctly client side, forceHydration  1`] = `
+<div>
+  <section
+    data-no-hydrate="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, no option  1`] = `
+<div>
+  <section
+    data-no-hydrate="true"
+  >
+    <div
+      class="label"
+    >
+      some content server side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, on idle 1`] = `
+<div>
+  <section
+    data-no-hydrate="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, with DOM event (onClick) 1`] = `
+<div>
+  <section
+    data-no-hydrate="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, with DOM event (onClick), custom selector 1`] = `
+<div>
+  <section
+    data-no-hydrate="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, with delay 1`] = `
+<div>
+  <section
+    data-no-hydrate="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`Without SSR Render correctly client side 1`] = `
+<div>
+  <section
+    style="display: inline-block;"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
