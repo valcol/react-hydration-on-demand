@@ -26,14 +26,40 @@ yarn add react-hydration-on-demand
 import withHydrationOnDemand from "react-hydration-on-demand";
 import Card from "../Card";
 
+//Hydrate when the component enters the viewport
 const CardWithHydrationOnDemand = withHydrationOnDemand({ on: ["visible"] })(
-  Card
+    Card
 );
 
+//Hydrate when the browser's event loop is idle
+const CardWithHydrationOnDemand = withHydrationOnDemand({ on: ["idle"] })(Card);
+
+//Hydrate after delay (by default: 2000ms)
+const CardWithHydrationOnDemand = withHydrationOnDemand({ on: ["delay"] })(
+    Card
+);
+
+//Hydrate after a custom delay (3000ms)
+const CardWithHydrationOnDemand = withHydrationOnDemand({
+    on: [["delay", 3000]]
+})(Card);
+
+//Hydrate when the user scroll on the document
+const CardWithHydrationOnDemand = withHydrationOnDemand({
+    on: [["scroll", document]]
+})(Card);
+
+//Hydrate  when the  when the browser's event loop is idle or when the user scroll, withever come first
+const CardWithHydrationOnDemand = withHydrationOnDemand({
+    on: ["idle", "visible"]
+})(Card);
+
+//...
+
 export default class App extends React.Component {
-  render() {
-    return <CardWithHydrationOnDemand title="my card" />;
-  }
+    render() {
+        return <CardWithHydrationOnDemand title="my card" />;
+    }
 }
 ```
 
@@ -53,7 +79,7 @@ import withHydrationOnDemand from "react-hydration-on-demand";
 import Card from "../Card";
 
 const CardWithHydrationOnDemand = withHydrationOnDemand({
-  on: ["visible", ["scroll", document], ["delay", 5000]]
+    on: ["visible", ["scroll", document], ["delay", 5000]]
 })(Card);
 ```
 
@@ -76,8 +102,8 @@ import loadable from "@loadable/component";
 
 const LoadableCard = loadable(() => import("../Card"));
 const CardWithHydrationOnDemand = withHydrationOnDemand({
-  on: ["visible"],
-  onBefore: LoadableCard.load
+    on: ["visible"],
+    onBefore: LoadableCard.load
 })(Card);
 ```
 
@@ -86,6 +112,29 @@ const CardWithHydrationOnDemand = withHydrationOnDemand({
 #### `wrapperProps: Object` (optional)
 
 Props that are applied to the div which wraps the provided component.
+
+```js
+import withHydrationOnDemand from "react-hydration-on-demand";
+import Card from "../Card";
+
+const CardWithHydrationOnDemand = withHydrationOnDemand({ on: ["delay"] })(
+    Card
+);
+
+export default class App extends React.Component {
+    render() {
+        return (
+            <CardWithHydrationOnDemand
+                title="my card"
+                wrapperProps={{
+                    className: "customClassName",
+                    style: { display: "contents" }
+                }}
+            />
+        );
+    }
+}
+```
 
 #### `forceHydration: Object` (optional)
 
