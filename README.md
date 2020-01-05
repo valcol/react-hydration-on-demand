@@ -34,7 +34,7 @@ const CardWithHydrationOnDemand = withHydrationOnDemand({ on: ["visible"] })(
 //Hydrate when the browser's event loop is idle
 const CardWithHydrationOnDemand = withHydrationOnDemand({ on: ["idle"] })(Card);
 
-//Hydrate after delay (by default: 2000ms)
+//Hydrate after a delay (by default: 2000ms)
 const CardWithHydrationOnDemand = withHydrationOnDemand({ on: ["delay"] })(
     Card
 );
@@ -49,10 +49,13 @@ const CardWithHydrationOnDemand = withHydrationOnDemand({
     on: [["scroll", document]]
 })(Card);
 
-//Hydrate  when the  when the browser's event loop is idle or when the user scroll, withever come first
+//Hydrate when the when the browser's event loop is idle or when the user scroll, whichever comes first
 const CardWithHydrationOnDemand = withHydrationOnDemand({
     on: ["idle", "visible"]
 })(Card);
+
+//Never hydrate unless forceHydrate is set to true in the props
+const CardWithHydrationOnDemand = withHydrationOnDemand()(Card);
 
 //...
 
@@ -72,7 +75,7 @@ If the component isn't rendered server side, it will render directly and behave 
 #### `on: Array`
 
 An array of events who will trigger the hydration.
-Can contains event names directly or array of 2 elements: `['event name', options]`.
+Can contains event names directly or if you want to pass options, as an array : `['event name', options]`.
 
 ```js
 import withHydrationOnDemand from "react-hydration-on-demand";
@@ -136,6 +139,6 @@ export default class App extends React.Component {
 }
 ```
 
-#### `forceHydration: Object` (optional)
+#### `forceHydration: Boolean` (optional)
 
 Force the hydration of the component.
