@@ -86,9 +86,7 @@ exports[`With SSR Render correctly client side, with delay 1`] = `
 
 exports[`Without SSR Render correctly client side 1`] = `
 <div>
-  <section
-    style="display: inline-block;"
-  >
+  <section>
     <div
       class="label"
     >
