@@ -31,9 +31,6 @@ var eventListenerOptions = {
   capture: true,
   passive: true
 };
-var defaultWrapperStyle = {
-  display: "inline-block"
-};
 
 var getDisplayName = function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || "Component";
@@ -44,8 +41,7 @@ var withHydrationOnDemandServerSide = function withHydrationOnDemandServerSide(W
     var wrapperProps = _ref.wrapperProps,
         props = (0, _objectWithoutProperties2["default"])(_ref, ["wrapperProps"]);
     return _react["default"].createElement("section", (0, _extends2["default"])({
-      "data-hydration-on-demand": true,
-      style: defaultWrapperStyle
+      "data-hydration-on-demand": true
     }, wrapperProps), _react["default"].createElement(WrappedComponent, props));
   };
 };
@@ -118,7 +114,10 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
       }();
 
       var initDOMEvent = function initDOMEvent(type) {
-        var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : rootRef.current;
+        var getTarget = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {
+          return rootRef.current;
+        };
+        var target = getTarget();
         target.addEventListener(type, hydrate, eventListenerOptions);
         cleanupFunctions.current.push(function () {
           target.removeEventListener(type, hydrate, eventListenerOptions);
@@ -153,12 +152,15 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
         });
       };
 
-      var initIntersectionObserver = function initIntersectionObserver(options) {
+      var initIntersectionObserver = function initIntersectionObserver() {
+        var getOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Function.prototype;
+
         if (!("IntersectionObserver" in window)) {
           hydrate();
           return;
         }
 
+        var options = getOptions();
         new IntersectionObserver(function (_ref5, observer) {
           var _ref6 = (0, _slicedToArray2["default"])(_ref5, 1),
               entry = _ref6[0];
@@ -205,12 +207,9 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
         dangerouslySetInnerHTML: {
           __html: ""
         },
-        suppressHydrationWarning: true,
-        style: defaultWrapperStyle
+        suppressHydrationWarning: true
       }, wrapperProps));
-      return _react["default"].createElement("section", (0, _extends2["default"])({
-        style: defaultWrapperStyle
-      }, wrapperProps), _react["default"].createElement(WrappedComponent, props));
+      return _react["default"].createElement("section", wrapperProps, _react["default"].createElement(WrappedComponent, props));
     };
 
     WithHydrationOnDemand.displayName = "withHydrationOnDemand(".concat(getDisplayName(WrappedComponent), ")");
