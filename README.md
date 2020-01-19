@@ -46,7 +46,7 @@ const CardWithHydrationOnDemand = withHydrationOnDemand({
 
 //Hydrate when the user scroll on the document
 const CardWithHydrationOnDemand = withHydrationOnDemand({
-    on: [["scroll", document]]
+    on: [["scroll", () => document]]
 })(Card);
 
 //Hydrate when the when the browser's event loop is idle or when the user scroll, whichever comes first
@@ -82,18 +82,18 @@ import withHydrationOnDemand from "react-hydration-on-demand";
 import Card from "../Card";
 
 const CardWithHydrationOnDemand = withHydrationOnDemand({
-    on: ["visible", ["scroll", document], ["delay", 5000]]
+    on: ["visible", ["scroll", () => document], ["delay", 5000]]
 })(Card);
 ```
 
 Support [all DOM events](https://developer.mozilla.org/en-US/docs/Web/Events) and more :
 
-| Event name                                                                | Options                                                                                                   | Description                                                                                                               |
-| ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| [**all DOM events**](https://developer.mozilla.org/en-US/docs/Web/Events) | target (default value: the provided component)                                                            |
-| **delay**                                                                 | delay in ms (default value: 2000)                                                                         | Scheduled hydration.                                                                                                      |
-| **visible**                                                               | [See intersectionObserver options](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver) | Requires IntersectionObserver. **Polyfill not included.** If unsupported the component is directy hydrated.               |
-| **idle**                                                                  |                                                                                                           | Requires requestIdleCallback. **Polyfill not included.** If unsupported the component is hydrated with a delay of 2000ms. |
+| Event name                                                                | Options                                                                                                                                                                 | Description                                                                                                               |
+| ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| [**all DOM events**](https://developer.mozilla.org/en-US/docs/Web/Events) | `getTarget: Function` who return the event target (default: the wrapped component)                                                                                      |
+| **delay**                                                                 | `delay: Number` in ms (default value: 2000)                                                                                                                             | Scheduled hydration.                                                                                                      |
+| **visible**                                                               | `getOptions: Function` who return an [intersectionObserver options](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver) object (default: no options) | Requires IntersectionObserver. **Polyfill not included.** If unsupported the component is directy hydrated.               |
+| **idle**                                                                  |                                                                                                                                                                         | Requires requestIdleCallback. **Polyfill not included.** If unsupported the component is hydrated with a delay of 2000ms. |
 
 #### `onBefore: Promise` (optional)
 
@@ -107,7 +107,7 @@ const LoadableCard = loadable(() => import("../Card"));
 const CardWithHydrationOnDemand = withHydrationOnDemand({
     on: ["visible"],
     onBefore: LoadableCard.load
-})(Card);
+})(LoadableCard);
 ```
 
 ## Props

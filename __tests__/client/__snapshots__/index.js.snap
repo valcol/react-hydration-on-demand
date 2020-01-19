@@ -3,7 +3,7 @@
 exports[`With SSR Render correctly client side, forceHydration  1`] = `
 <div>
   <section
-    data-no-hydrate="true"
+    data-hydration-on-demand="true"
   >
     <div
       class="label"
@@ -17,7 +17,7 @@ exports[`With SSR Render correctly client side, forceHydration  1`] = `
 exports[`With SSR Render correctly client side, no option  1`] = `
 <div>
   <section
-    data-no-hydrate="true"
+    data-hydration-on-demand="true"
   >
     <div
       class="label"
@@ -31,7 +31,63 @@ exports[`With SSR Render correctly client side, no option  1`] = `
 exports[`With SSR Render correctly client side, on idle 1`] = `
 <div>
   <section
-    data-no-hydrate="true"
+    data-hydration-on-demand="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, on idle, requestIdleCallback unsupported 1`] = `
+<div>
+  <section
+    data-hydration-on-demand="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, on visible, IntersectionObserver unsupported 1`] = `
+<div>
+  <section
+    data-hydration-on-demand="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, on visible, component not visible 1`] = `
+<div>
+  <section
+    data-hydration-on-demand="true"
+  >
+    <div
+      class="label"
+    >
+      some content server side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, on visible, component visible 1`] = `
+<div>
+  <section
+    data-hydration-on-demand="true"
   >
     <div
       class="label"
@@ -45,7 +101,7 @@ exports[`With SSR Render correctly client side, on idle 1`] = `
 exports[`With SSR Render correctly client side, with DOM event (onClick) 1`] = `
 <div>
   <section
-    data-no-hydrate="true"
+    data-hydration-on-demand="true"
   >
     <div
       class="label"
@@ -59,7 +115,7 @@ exports[`With SSR Render correctly client side, with DOM event (onClick) 1`] = `
 exports[`With SSR Render correctly client side, with DOM event (onClick), custom selector 1`] = `
 <div>
   <section
-    data-no-hydrate="true"
+    data-hydration-on-demand="true"
   >
     <div
       class="label"
@@ -73,7 +129,7 @@ exports[`With SSR Render correctly client side, with DOM event (onClick), custom
 exports[`With SSR Render correctly client side, with delay 1`] = `
 <div>
   <section
-    data-no-hydrate="true"
+    data-hydration-on-demand="true"
   >
     <div
       class="label"

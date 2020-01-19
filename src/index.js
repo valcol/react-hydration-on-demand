@@ -49,7 +49,8 @@ const withHydrationOnDemandClientSide = ({
             setIsHydrated(true);
         };
 
-        const initDOMEvent = (type, target = rootRef.current) => {
+        const initDOMEvent = (type, getTarget = () => rootRef.current) => {
+            const target = getTarget();
             target.addEventListener(type, hydrate, eventListenerOptions);
             cleanupFunctions.current.push(() => {
                 target.removeEventListener(type, hydrate, eventListenerOptions);
@@ -81,12 +82,13 @@ const withHydrationOnDemandClientSide = ({
             });
         };
 
-        const initIntersectionObserver = options => {
+        const initIntersectionObserver = (getOptions = Function.prototype) => {
             if (!("IntersectionObserver" in window)) {
                 hydrate();
                 return;
             }
 
+            const options = getOptions();
             new IntersectionObserver(([entry], observer) => {
                 if (!entry.isIntersecting || !(entry.intersectionRatio > 0))
                     return;

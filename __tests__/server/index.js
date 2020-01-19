@@ -9,25 +9,27 @@ import withHydrationOnDemand from "../../src";
 const Component = ({ label }) => <div className="label">{label}</div>;
 
 test("Render correctly server side ", () => {
-  const ComponentWithHydrationOnDemand = withHydrationOnDemand()(Component);
+    const ComponentWithHydrationOnDemand = withHydrationOnDemand({
+        on: [["scroll", () => document]]
+    })(Component);
 
-  const component = ReactDOMServer.renderToString(
-    <ComponentWithHydrationOnDemand label="some content server side" />
-  );
-  expect(component).toMatchSnapshot();
+    const component = ReactDOMServer.renderToString(
+        <ComponentWithHydrationOnDemand label="some content server side" />
+    );
+    expect(component).toMatchSnapshot();
 });
 
 test("Render correctly server side with custom wrapper props", () => {
-  const ComponentWithHydrationOnDemand = withHydrationOnDemand()(Component);
+    const ComponentWithHydrationOnDemand = withHydrationOnDemand()(Component);
 
-  const component = ReactDOMServer.renderToString(
-    <ComponentWithHydrationOnDemand
-      wrapperProps={{
-        className: "test-classname",
-        style: { display: "contents" }
-      }}
-      label="some content server side"
-    />
-  );
-  expect(component).toMatchSnapshot();
+    const component = ReactDOMServer.renderToString(
+        <ComponentWithHydrationOnDemand
+            wrapperProps={{
+                className: "test-classname",
+                style: { display: "contents" }
+            }}
+            label="some content server side"
+        />
+    );
+    expect(component).toMatchSnapshot();
 });

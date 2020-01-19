@@ -1,51 +1,51 @@
 {
-  "name": "react-hydration-on-demand",
-  "version": "1.0.0",
-  "description": "Hydrate your React components only when you need to",
-  "main": "dist/index.js",
-  "files": [
-    "/dist"
-  ],
-  "scripts": {
-    "test": "jest",
-    "build": "./node_modules/.bin/babel src --out-file dist/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/valcol/react-hydration-on-demand.git"
-  },
-  "keywords": [
-    "react",
-    "hydrate",
-    "hydration",
-    "ssr"
-  ],
-  "author": "valcol",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/valcol/react-hydration-on-demand/issues"
-  },
-  "homepage": "https://github.com/valcol/react-hydration-on-demand#readme",
-  "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "@babel/plugin-transform-runtime": "^7.7.6",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/preset-react": "^7.6.3",
-    "@testing-library/dom": "^6.11.0",
-    "@testing-library/react": "^9.4.0",
-    "babel-jest": "^24.9.0",
-    "jest": "^24.9.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "react-test-renderer": "^16.11.0"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.7.7",
-    "exenv": "^1.2.2"
-  }
+    "name": "react-hydration-on-demand",
+    "version": "2.0.0",
+    "description": "Hydrate your React components only when you need to",
+    "main": "dist/index.js",
+    "files": [
+        "/dist"
+    ],
+    "scripts": {
+        "test": "jest",
+        "build": "./node_modules/.bin/babel src --out-file dist/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/valcol/react-hydration-on-demand.git"
+    },
+    "keywords": [
+        "react",
+        "hydrate",
+        "hydration",
+        "ssr"
+    ],
+    "author": "valcol",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/valcol/react-hydration-on-demand/issues"
+    },
+    "homepage": "https://github.com/valcol/react-hydration-on-demand#readme",
+    "peerDependencies": {
+        "react": "^16.8.0",
+        "react-dom": "^16.8.0"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.6.4",
+        "@babel/core": "^7.6.4",
+        "@babel/plugin-transform-runtime": "^7.7.6",
+        "@babel/preset-env": "^7.6.3",
+        "@babel/preset-react": "^7.6.3",
+        "@testing-library/dom": "^6.11.0",
+        "@testing-library/react": "^9.4.0",
+        "babel-jest": "^24.9.0",
+        "jest": "^24.9.0",
+        "react": "^16.8.0",
+        "react-dom": "^16.8.0",
+        "react-test-renderer": "^16.11.0"
+    },
+    "dependencies": {
+        "@babel/runtime": "^7.7.7",
+        "exenv": "^1.2.2"
+    }
 }
