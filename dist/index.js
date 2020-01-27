@@ -201,6 +201,7 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
         on.forEach(function (event) {
           return Array.isArray(event) ? initEvent.apply(void 0, (0, _toConsumableArray2["default"])(event)) : initEvent(event);
         });
+        return cleanUp;
       }, []);
       if (!isHydrated) return _react["default"].createElement("section", (0, _extends2["default"])({
         ref: rootRef,
