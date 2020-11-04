@@ -1,10 +1,14 @@
-# react-hydration-on-demand
+# react-hydration-on-demand - Progressive hydration made easy 💧
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/valcol/react-hydration-on-demand/NPM%20Publish)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-hydration-on-demand)
 ![npm](https://img.shields.io/npm/v/react-hydration-on-demand)
+![npm](https://img.shields.io/npm/dm/react-hydration-on-demand)
 
-Hydrate your React components only when you need to
+Hydrate your component rendered server-side only when needed to relieve the main thread, thus improving TTI, TBT and FID.
+Can be used with a code-splitting library to load the component code at runtime right before the hydration step and reduce the initial payload size of your application.
+
+![](reactrender.png?raw=true)
 
 ## Install
 
@@ -41,17 +45,17 @@ const CardWithHydrationOnDemand = withHydrationOnDemand({ on: ["delay"] })(
 
 //Hydrate after a custom delay (3000ms)
 const CardWithHydrationOnDemand = withHydrationOnDemand({
-    on: [["delay", 3000]]
+    on: [["delay", 3000]],
 })(Card);
 
 //Hydrate when the user scroll on the document
 const CardWithHydrationOnDemand = withHydrationOnDemand({
-    on: [["scroll", () => document]]
+    on: [["scroll", () => document]],
 })(Card);
 
 //Hydrate when the when the browser's event loop is idle or when the user scroll, whichever comes first
 const CardWithHydrationOnDemand = withHydrationOnDemand({
-    on: ["idle", "visible"]
+    on: ["idle", "visible"],
 })(Card);
 
 //Never hydrate unless forceHydrate is set to true in the props
@@ -82,7 +86,7 @@ import withHydrationOnDemand from "react-hydration-on-demand";
 import Card from "../Card";
 
 const CardWithHydrationOnDemand = withHydrationOnDemand({
-    on: ["visible", ["scroll", () => document], ["delay", 5000]]
+    on: ["visible", ["scroll", () => document], ["delay", 5000]],
 })(Card);
 ```
 
@@ -106,7 +110,7 @@ import loadable from "@loadable/component";
 const LoadableCard = loadable(() => import("../Card"));
 const CardWithHydrationOnDemand = withHydrationOnDemand({
     on: ["visible"],
-    onBefore: LoadableCard.load
+    onBefore: LoadableCard.load,
 })(LoadableCard);
 ```
 
@@ -131,7 +135,7 @@ export default class App extends React.Component {
                 title="my card"
                 wrapperProps={{
                     className: "customClassName",
-                    style: { display: "contents" }
+                    style: { display: "contents" },
                 }}
             />
         );
