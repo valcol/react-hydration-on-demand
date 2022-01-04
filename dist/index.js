@@ -49,10 +49,14 @@ var withHydrationOnDemandServerSide = function withHydrationOnDemandServerSide(W
 var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_ref2) {
   var _ref2$disableFallback = _ref2.disableFallback,
       disableFallback = _ref2$disableFallback === void 0 ? false : _ref2$disableFallback,
+      _ref2$isInputPendingF = _ref2.isInputPendingFallbackValue,
+      isInputPendingFallbackValue = _ref2$isInputPendingF === void 0 ? true : _ref2$isInputPendingF,
+      _ref2$on = _ref2.on,
+      on = _ref2$on === void 0 ? [] : _ref2$on,
       _ref2$onBefore = _ref2.onBefore,
       onBefore = _ref2$onBefore === void 0 ? Function.prototype : _ref2$onBefore,
-      _ref2$on = _ref2.on,
-      on = _ref2$on === void 0 ? [] : _ref2$on;
+      _ref2$whenInputPendin = _ref2.whenInputPending,
+      whenInputPending = _ref2$whenInputPendin === void 0 ? false : _ref2$whenInputPendin;
   return function (WrappedComponent) {
     var WithHydrationOnDemand = function WithHydrationOnDemand(_ref3) {
       var _ref3$forceHydration = _ref3.forceHydration,
@@ -108,6 +112,13 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
           return _ref4.apply(this, arguments);
         };
       }();
+
+      var isInputPending = function isInputPending() {
+        var _navigator, _navigator$scheduling, _navigator$scheduling2;
+
+        var isInputPending = (_navigator = navigator) === null || _navigator === void 0 ? void 0 : (_navigator$scheduling = _navigator.scheduling) === null || _navigator$scheduling === void 0 ? void 0 : (_navigator$scheduling2 = _navigator$scheduling.isInputPending) === null || _navigator$scheduling2 === void 0 ? void 0 : _navigator$scheduling2.call(_navigator$scheduling);
+        return isInputPending !== null && isInputPending !== void 0 ? isInputPending : isInputPendingFallbackValue;
+      };
 
       var initDOMEvent = function initDOMEvent(type) {
         var getTarget = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {
@@ -193,10 +204,16 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
 
       (0, _react.useLayoutEffect)(function () {
         if (isHydrated) return;
+
+        if (forceHydration) {
+          hydrate();
+          return;
+        }
+
         var wasRenderedServerSide = !!rootRef.current.getAttribute("data-hydration-on-demand");
-        var shouldHydrate = !wasRenderedServerSide && !disableFallback || forceHydration;
+        var shouldHydrate = !wasRenderedServerSide && !disableFallback || whenInputPending && !isInputPending();
         if (shouldHydrate) hydrate();
-      });
+      }, [forceHydration]);
       (0, _react.useEffect)(function () {
         if (isHydrated || forceHydration) return;
         on.forEach(function (event) {

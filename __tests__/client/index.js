@@ -24,6 +24,7 @@ beforeEach(() => {
     window.cancelIdleCallback = originalCancelIdleCallback;
     window.IntersectionObserver = originalIntersectionObserver;
     window.clearTimeout = originalClearTimeout;
+    window.navigator.scheduling = undefined;
 });
 
 describe("With SSR", () => {
@@ -52,6 +53,109 @@ describe("With SSR", () => {
 
         const ComponentWithHydrationOnDemandClient = withHydrationOnDemand({
             on: [["delay", 200]],
+        })(Component);
+
+        const { getByText } = render(
+            <ComponentWithHydrationOnDemandClient label={clientSideText} />,
+            {
+                container: elem,
+                hydrate: true,
+            }
+        );
+
+        await waitFor(() => getByText(clientSideText));
+
+        expect(elem).toMatchSnapshot();
+    });
+
+
+
+    test("Render correctly client side, with whenInputPending at true and no input pending", async () => {
+        const elem = document.createElement("div");
+        elem.innerHTML = SSRhtml;
+        window.navigator.scheduling = { isInputPending : jest.fn(() => false) };
+
+        const ComponentWithHydrationOnDemandClient = withHydrationOnDemand({
+            on: ["click"],
+            whenInputPending: true,
+        })(Component);
+
+        const { getByText } = render(
+            <ComponentWithHydrationOnDemandClient label={clientSideText} />,
+            {
+                container: elem,
+                hydrate: true,
+            }
+        );
+
+        expect(window.navigator.scheduling.isInputPending).toHaveBeenCalled();
+
+        await waitFor(() => getByText(clientSideText));
+
+        expect(elem).toMatchSnapshot();
+    });
+
+    test("Render correctly client side, with whenInputPending at true and input pending", async () => {
+        const elem = document.createElement("div");
+        elem.innerHTML = SSRhtml;
+        window.navigator.scheduling = { isInputPending : jest.fn(() => true) };
+
+        const ComponentWithHydrationOnDemandClient = withHydrationOnDemand({
+            on: ["click"],
+            whenInputPending: true,
+        })(Component);
+
+        const { getByText } = render(
+            <ComponentWithHydrationOnDemandClient label={clientSideText} />,
+            {
+                container: elem,
+                hydrate: true,
+            }
+        );
+
+        expect(window.navigator.scheduling.isInputPending).toHaveBeenCalled();
+
+        fireEvent.click(getByText(serverSideText));
+
+        await waitFor(() => getByText(clientSideText));
+
+        expect(elem).toMatchSnapshot();
+    });
+
+    test("Render correctly client side, with whenInputPending at true and isInputPending unsupported", async () => {
+        const elem = document.createElement("div");
+        elem.innerHTML = SSRhtml;
+        window.navigator.scheduling = {};
+
+        const ComponentWithHydrationOnDemandClient = withHydrationOnDemand({
+            on: ["click"],
+            whenInputPending: true,
+        })(Component);
+
+        const { getByText } = render(
+            <ComponentWithHydrationOnDemandClient label={clientSideText} />,
+            {
+                container: elem,
+                hydrate: true,
+            }
+        );
+
+        fireEvent.click(getByText(serverSideText));
+
+        await waitFor(() => getByText(clientSideText));
+
+        expect(elem).toMatchSnapshot();
+    });
+
+    test("Render correctly client side, with whenInputPending at true, isInputPending unsupported and isInputPendingFallbackValue at false", async () => {
+        const elem = document.createElement("div");
+        elem.innerHTML = SSRhtml;
+        window.navigator.scheduling = {};
+
+        const ComponentWithHydrationOnDemandClient = withHydrationOnDemand({
+            on: ["click"],
+            whenInputPending: true,
+            isInputPendingFallbackValue: false,
         })(Component);
 
         const { getByText } = render(
@@ -356,7 +460,25 @@ describe("With SSR", () => {
 });
 
 describe("Without SSR", () => {
-    test("Render correctly client side", async () => {
+    test("Don't render client side only with fallback disabled", async () => {
+        const elem = document.createElement("div");
+
+        const ComponentWithHydrationOnDemandClient = withHydrationOnDemand({
+            disableFallback: true,
+        })(Component);
+
+        render(
+            <ComponentWithHydrationOnDemandClient label={clientSideText} />,
+            {
+                container: elem,
+                hydrate: true,
+            }
+        );
+
+        expect(elem).toMatchSnapshot();
+    });
+
+    test("Render correctly client side only", async () => {
         const elem = document.createElement("div");
 
         const ComponentWithHydrationOnDemandClient = withHydrationOnDemand()(

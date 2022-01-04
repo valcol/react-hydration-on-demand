@@ -140,7 +140,69 @@ exports[`With SSR Render correctly client side, with delay 1`] = `
 </div>
 `;
 
-exports[`Without SSR Render correctly client side 1`] = `
+exports[`With SSR Render correctly client side, with whenInputPending at true and input pending 1`] = `
+<div>
+  <section
+    data-hydration-on-demand="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, with whenInputPending at true and isInputPending unsupported 1`] = `
+<div>
+  <section
+    data-hydration-on-demand="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, with whenInputPending at true and no input pending 1`] = `
+<div>
+  <section
+    data-hydration-on-demand="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`With SSR Render correctly client side, with whenInputPending at true, isInputPending unsupported and isInputPendingFallbackValue at false 1`] = `
+<div>
+  <section
+    data-hydration-on-demand="true"
+  >
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </section>
+</div>
+`;
+
+exports[`Without SSR Don't render client side only with fallback disabled 1`] = `
+<div>
+  <section />
+</div>
+`;
+
+exports[`Without SSR Render correctly client side only 1`] = `
 <div>
   <section>
     <div

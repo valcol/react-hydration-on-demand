@@ -24,8 +24,10 @@ const withHydrationOnDemandServerSide = (WrappedComponent) => ({
 
 const withHydrationOnDemandClientSide = ({
     disableFallback = false,
-    onBefore = Function.prototype,
+    isInputPendingFallbackValue = true,
     on = [],
+    onBefore = Function.prototype,
+    whenInputPending = false,
 }) => (WrappedComponent) => {
     const WithHydrationOnDemand = ({
         forceHydration = false,
@@ -45,9 +47,14 @@ const withHydrationOnDemandClientSide = ({
             cleanUp();
             if (isHydrated) return;
 
-            await onBefore();
-            setIsHydrated(true);
+            await onBefore();                           
+            setIsHydrated(true); 
         };
+
+        const isInputPending = () => {
+            const isInputPending = navigator?.scheduling?.isInputPending?.();
+            return isInputPending ?? isInputPendingFallbackValue;
+        }
 
         const initDOMEvent = (type, getTarget = () => rootRef.current) => {
             const target = getTarget();
@@ -124,13 +131,18 @@ const withHydrationOnDemandClientSide = ({
         useLayoutEffect(() => {
             if (isHydrated) return;
 
+            if (forceHydration){
+                hydrate();
+                return;
+            }
+
             const wasRenderedServerSide = !!rootRef.current.getAttribute(
                 "data-hydration-on-demand"
             );
             const shouldHydrate =
-                (!wasRenderedServerSide && !disableFallback) || forceHydration;
+                (!wasRenderedServerSide && !disableFallback) || (whenInputPending && !isInputPending());
             if (shouldHydrate) hydrate();
-        });
+        }, [forceHydration]);
 
         useEffect(() => {
             if (isHydrated || forceHydration) return;
