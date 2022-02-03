@@ -53,8 +53,7 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
       isInputPendingFallbackValue = _ref2$isInputPendingF === void 0 ? true : _ref2$isInputPendingF,
       _ref2$on = _ref2.on,
       on = _ref2$on === void 0 ? [] : _ref2$on,
-      _ref2$onBefore = _ref2.onBefore,
-      onBefore = _ref2$onBefore === void 0 ? Function.prototype : _ref2$onBefore,
+      onBefore = _ref2.onBefore,
       _ref2$whenInputPendin = _ref2.whenInputPending,
       whenInputPending = _ref2$whenInputPendin === void 0 ? false : _ref2$whenInputPendin;
   return function (WrappedComponent) {
@@ -66,7 +65,19 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
       var rootRef = (0, _react.useRef)(null);
       var cleanupFunctions = (0, _react.useRef)([]);
 
-      var _useState = (0, _react.useState)(false),
+      var isInputPending = function isInputPending() {
+        var _navigator, _navigator$scheduling, _navigator$scheduling2;
+
+        var isInputPending = (_navigator = navigator) === null || _navigator === void 0 ? void 0 : (_navigator$scheduling = _navigator.scheduling) === null || _navigator$scheduling === void 0 ? void 0 : (_navigator$scheduling2 = _navigator$scheduling.isInputPending) === null || _navigator$scheduling2 === void 0 ? void 0 : _navigator$scheduling2.call(_navigator$scheduling);
+        return isInputPending !== null && isInputPending !== void 0 ? isInputPending : isInputPendingFallbackValue;
+      };
+
+      var getDefaultHydrationState = function getDefaultHydrationState() {
+        var isNotInputPending = whenInputPending && !isInputPending();
+        return (isNotInputPending || forceHydration) && !onBefore;
+      };
+
+      var _useState = (0, _react.useState)(getDefaultHydrationState()),
           _useState2 = (0, _slicedToArray2["default"])(_useState, 2),
           isHydrated = _useState2[0],
           setIsHydrated = _useState2[1];
@@ -94,13 +105,18 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
                   return _context.abrupt("return");
 
                 case 3:
-                  _context.next = 5;
+                  if (!onBefore) {
+                    _context.next = 6;
+                    break;
+                  }
+
+                  _context.next = 6;
                   return onBefore();
 
-                case 5:
+                case 6:
                   setIsHydrated(true);
 
-                case 6:
+                case 7:
                 case "end":
                   return _context.stop();
               }
@@ -112,13 +128,6 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
           return _ref4.apply(this, arguments);
         };
       }();
-
-      var isInputPending = function isInputPending() {
-        var _navigator, _navigator$scheduling, _navigator$scheduling2;
-
-        var isInputPending = (_navigator = navigator) === null || _navigator === void 0 ? void 0 : (_navigator$scheduling = _navigator.scheduling) === null || _navigator$scheduling === void 0 ? void 0 : (_navigator$scheduling2 = _navigator$scheduling.isInputPending) === null || _navigator$scheduling2 === void 0 ? void 0 : _navigator$scheduling2.call(_navigator$scheduling);
-        return isInputPending !== null && isInputPending !== void 0 ? isInputPending : isInputPendingFallbackValue;
-      };
 
       var initDOMEvent = function initDOMEvent(type) {
         var getTarget = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {
@@ -169,7 +178,7 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
         }
 
         var options = getOptions();
-        var observer = new IntersectionObserver(function (_ref5, observer) {
+        var observer = new IntersectionObserver(function (_ref5) {
           var _ref6 = (0, _slicedToArray2["default"])(_ref5, 1),
               entry = _ref6[0];
 
@@ -211,11 +220,11 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
         }
 
         var wasRenderedServerSide = !!rootRef.current.getAttribute("data-hydration-on-demand");
-        var shouldHydrate = !wasRenderedServerSide && !disableFallback || whenInputPending && !isInputPending();
+        var shouldHydrate = !wasRenderedServerSide && !disableFallback;
         if (shouldHydrate) hydrate();
       }, [forceHydration]);
       (0, _react.useEffect)(function () {
-        if (isHydrated || forceHydration) return;
+        if (isHydrated) return;
         on.forEach(function (event) {
           return Array.isArray(event) ? initEvent.apply(void 0, (0, _toConsumableArray2["default"])(event)) : initEvent(event);
         });
