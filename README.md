@@ -67,7 +67,7 @@ const CardWithHydrationOnDemand = withHydrationOnDemand({
     onBefore: LoadableCard.load,
 })(LoadableCard);
 
-//Never hydrate unless forceHydrate is set to true in the props
+//Never hydrate unless the prop forceHydration is set to true
 const CardWithHydrationOnDemand = withHydrationOnDemand()(Card);
 
 //...
