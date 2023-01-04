@@ -1,28 +1,44 @@
-# react-hydration-on-demand - Progressive hydration made easy 💧
-
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/valcol/react-hydration-on-demand/NPM%20Publish)
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-hydration-on-demand)
-![npm](https://img.shields.io/npm/v/react-hydration-on-demand)
-![npm](https://img.shields.io/npm/dm/react-hydration-on-demand)
+<div align="center">
+  <h1>
+    <br/>
+    <br/>
+    💧
+    <br />
+    react-hydration-on-demand
+    <br />
+    <br />
+    <br />
+  </h1>
+  <sup>
+    <br />
+    <br />
+    <a href="https://www.npmjs.com/package/react-hydration-on-demand">
+       <img src="https://img.shields.io/npm/dm/react-hydration-on-demand" alt="npm package" />
+    </a>
+    <a href="https://www.npmjs.com/package/react-hydration-on-demand">
+       <img src="https://img.shields.io/github/actions/workflow/status/valcol/react-hydration-on-demand/main.yml" alt="npm package" />
+    </a>
+    <a href="https://www.npmjs.com/package/react-hydration-on-demand">
+       <img src="https://img.shields.io/bundlephobia/minzip/react-hydration-on-demand" alt="dep size" />
+    </a>
+    <a href="https://www.npmjs.com/package/react-hydration-on-demand">
+      <img src="https://img.shields.io/npm/v/react-hydration-on-demand" alt="version" />
+    </a>
+    <br />
+  </sup>
+   <h3>A <a href="https://reactjs.org/docs/hooks-intro.html">React hook</a> that allows you to <a href="https://web.dev/optimize-long-tasks/#a-dedicated-scheduler-api">schedule tasks</a> and automatically orchestrate them based on your component lifecycle and visibility.<h3>
+  <br />
+  <br />
+  <pre>npm i <a href="https://www.npmjs.com/package/react-hydration-on-demand">react-hydration-on-demand</a></pre>
+  <pre>yarn add <a href="https://www.npmjs.com/package/react-hydration-on-demand">react-hydration-on-demand</a></pre>
+  <br /> 
+  <br />
+</div>
 
 Hydrate your component rendered server-side only when needed to relieve the main thread, thus improving TTI, TBT and FID.
 Can be used with a code-splitting library to load the component code at runtime right before the hydration step and reduce the initial payload size of your application.
 
 ![](reactrender.png?raw=true)
-
-## Install
-
-#### npm
-
-```
-npm install react-hydration-on-demand --save
-```
-
-#### yarn
-
-```
-yarn add react-hydration-on-demand
-```
 
 ## How to use
 
