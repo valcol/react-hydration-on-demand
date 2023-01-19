@@ -26,7 +26,7 @@
     </a>
     <br />
   </sup>
-   <h3>A <a href="https://reactjs.org/docs/hooks-intro.html">React hook</a> that allows you to <a href="https://web.dev/optimize-long-tasks/#a-dedicated-scheduler-api">schedule tasks</a> and automatically orchestrate them based on your component lifecycle and visibility.<h3>
+   <h3>Hydrate your React components only when needed.<h3>
   <br />
   <br />
   <pre>npm i <a href="https://www.npmjs.com/package/react-hydration-on-demand">react-hydration-on-demand</a></pre>
@@ -35,8 +35,8 @@
   <br />
 </div>
 
-Hydrate your component rendered server-side only when needed to relieve the main thread, thus improving TTI, TBT and FID.
-Can be used with a code-splitting library to load the component code at runtime right before the hydration step and reduce the initial payload size of your application.
+Hydrates server-side rendered components only when necessary to offload the main thread, improving TTI, TBT, and FID.
+It can be used with code-splitting libraries to load component code at runtime just before the hydration step, reducing the initial payload size of your application.
 
 ![](reactrender.png?raw=true)
 
