@@ -2,9 +2,7 @@
 
 exports[`With SSR Render correctly client side, forceHydration  1`] = `
 <div>
-  <section
-    data-hydration-on-demand="true"
-  >
+  <section>
     <div
       class="label"
     >
@@ -170,9 +168,7 @@ exports[`With SSR Render correctly client side, with whenInputPending at true an
 
 exports[`With SSR Render correctly client side, with whenInputPending at true and no input pending 1`] = `
 <div>
-  <section
-    data-hydration-on-demand="true"
-  >
+  <section>
     <div
       class="label"
     >
@@ -184,9 +180,7 @@ exports[`With SSR Render correctly client side, with whenInputPending at true an
 
 exports[`With SSR Render correctly client side, with whenInputPending at true, isInputPending unsupported and isInputPendingFallbackValue at false 1`] = `
 <div>
-  <section
-    data-hydration-on-demand="true"
-  >
+  <section>
     <div
       class="label"
     >
