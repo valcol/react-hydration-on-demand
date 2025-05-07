@@ -15,12 +15,14 @@ const getDisplayName = (WrappedComponent) => {
 
 const withHydrationOnDemandServerSide =
     (WrappedComponent) =>
-    ({ wrapperProps, ...props }) =>
-        (
-            <section data-hydration-on-demand={true} {...wrapperProps}>
+    ({ wrapperProps = {}, ...props }) => {
+        const { as: WrapperComponent = 'section', ...wrapperPropsRest } = wrapperProps || {};
+        return (
+            <WrapperComponent data-hydration-on-demand={true} {...wrapperPropsRest}>
                 <WrappedComponent {...props} />
-            </section>
+            </WrapperComponent>
         );
+    };
 
 const withHydrationOnDemandClientSide =
     ({
@@ -33,9 +35,10 @@ const withHydrationOnDemandClientSide =
     (WrappedComponent) => {
         const WithHydrationOnDemand = ({
             forceHydration = false,
-            wrapperProps,
+            wrapperProps = {},
             ...props
         }) => {
+            const { as: WrapperComponent = 'section', ...wrapperPropsRest } = wrapperProps || {};
             const rootRef = useRef(null);
             const cleanupFunctions = useRef([]);
 
@@ -175,18 +178,18 @@ const withHydrationOnDemandClientSide =
 
             if (!isHydrated)
                 return (
-                    <section
+                    <WrapperComponent
                         ref={rootRef}
                         dangerouslySetInnerHTML={{ __html: "" }}
                         suppressHydrationWarning
-                        {...wrapperProps}
+                        {...wrapperPropsRest}
                     />
                 );
 
             return (
-                <section {...wrapperProps}>
+                <WrapperComponent {...wrapperPropsRest}>
                     <WrappedComponent {...props} />
-                </section>
+                </WrapperComponent>
             );
         };
 

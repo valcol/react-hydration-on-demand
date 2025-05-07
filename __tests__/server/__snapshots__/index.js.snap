@@ -2,4 +2,6 @@
 
 exports[`Render correctly server side  1`] = `"<section data-hydration-on-demand=\\"true\\"><div class=\\"label\\">some content server side</div></section>"`;
 
+exports[`Render correctly server side with custom wrapper element 1`] = `"<div data-hydration-on-demand=\\"true\\" class=\\"test-classname\\" style=\\"display:contents\\"><div class=\\"label\\">some content server side</div></div>"`;
+
 exports[`Render correctly server side with custom wrapper props 1`] = `"<section data-hydration-on-demand=\\"true\\" class=\\"test-classname\\" style=\\"display:contents\\"><div class=\\"label\\">some content server side</div></section>"`;

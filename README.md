@@ -162,13 +162,15 @@ If set at true the component will not be rendered client side if not rendered se
 
 Props that are applied to the div which wraps the provided component.
 
+#### `wrapperProps.as: String | React.ComponentType` (optional, default: 'section')
+
+Specifies the HTML element or React component to use as the wrapper. This allows for semantically correct and accessible markup. For example, use `'div'` for generic containers or `'a'` for links.
+
 ```js
 import withHydrationOnDemand from "react-hydration-on-demand";
 import Card from "../Card";
 
-const CardWithHydrationOnDemand = withHydrationOnDemand({ on: ["delay"] })(
-    Card
-);
+const CardWithHydrationOnDemand = withHydrationOnDemand({ on: ["delay"] })(Card);
 
 export default class App extends React.Component {
     render() {
@@ -176,6 +178,7 @@ export default class App extends React.Component {
             <CardWithHydrationOnDemand
                 title="my card"
                 wrapperProps={{
+                    as: 'div', // Use a div instead of the default section
                     className: "customClassName",
                     style: { display: "contents" },
                 }}

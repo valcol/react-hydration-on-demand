@@ -124,6 +124,18 @@ exports[`With SSR Render correctly client side, with DOM event (onClick), custom
 </div>
 `;
 
+exports[`With SSR Render correctly client side, with custom wrapper element 1`] = `
+<div>
+  <div>
+    <div
+      class="label"
+    >
+      some content client side
+    </div>
+  </div>
+</div>
+`;
+
 exports[`With SSR Render correctly client side, with delay 1`] = `
 <div>
   <section

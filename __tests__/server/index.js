@@ -33,3 +33,19 @@ test("Render correctly server side with custom wrapper props", () => {
     );
     expect(component).toMatchSnapshot();
 });
+
+test("Render correctly server side with custom wrapper element", () => {
+    const ComponentWithHydrationOnDemand = withHydrationOnDemand()(Component);
+
+    const component = ReactDOMServer.renderToString(
+        <ComponentWithHydrationOnDemand
+            wrapperProps={{
+                as: 'div',
+                className: "test-classname",
+                style: { display: "contents" }
+            }}
+            label="some content server side"
+        />
+    );
+    expect(component).toMatchSnapshot();
+});

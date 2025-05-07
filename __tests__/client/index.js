@@ -440,6 +440,31 @@ describe("With SSR", () => {
     expect(elem.removeEventListener).toHaveBeenCalled();
     expect(disconnect).toHaveBeenCalled();
   });
+
+  test("Render correctly client side, with custom wrapper element", async () => {
+    const elem = document.createElement("div");
+    elem.innerHTML = SSRhtml;
+
+    const ComponentWithHydrationOnDemandClient = withHydrationOnDemand({
+      on: ["delay"],
+    })(Component);
+
+    const { getByText } = render(
+      <ComponentWithHydrationOnDemandClient
+        label={clientSideText}
+        wrapperProps={{ as: 'div' }}
+      />,
+      {
+        container: elem,
+        hydrate: true,
+      }
+    );
+
+    await waitFor(() => getByText(clientSideText));
+
+    expect(elem.querySelector('div')).toBeTruthy();
+    expect(elem).toMatchSnapshot();
+  });
 });
 
 describe("Without SSR", () => {
