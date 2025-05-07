@@ -126,7 +126,10 @@ exports[`With SSR Render correctly client side, with DOM event (onClick), custom
 
 exports[`With SSR Render correctly client side, with custom wrapper element 1`] = `
 <div>
-  <div>
+  <div
+    class="wrapper"
+    data-hydration-on-demand="true"
+  >
     <div
       class="label"
     >

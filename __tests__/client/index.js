@@ -78,6 +78,7 @@ describe("With SSR", () => {
       {
         container: elem,
         hydrate: true,
+        onRecoverableError: jest.fn(),
       }
     );
 
@@ -156,6 +157,7 @@ describe("With SSR", () => {
       {
         container: elem,
         hydrate: true,
+        onRecoverableError: jest.fn(),
       }
     );
 
@@ -397,6 +399,7 @@ describe("With SSR", () => {
       {
         container: elem,
         hydrate: true,
+        onRecoverableError: jest.fn(),
       }
     );
 
@@ -443,16 +446,16 @@ describe("With SSR", () => {
 
   test("Render correctly client side, with custom wrapper element", async () => {
     const elem = document.createElement("div");
-    elem.innerHTML = SSRhtml;
+    elem.innerHTML = `<div data-hydration-on-demand="true" class="wrapper"><div class="label">${serverSideText}</div></div>`;
 
     const ComponentWithHydrationOnDemandClient = withHydrationOnDemand({
-      on: ["delay"],
+      on: [["delay", 200]],
     })(Component);
 
     const { getByText } = render(
       <ComponentWithHydrationOnDemandClient
         label={clientSideText}
-        wrapperProps={{ as: 'div' }}
+        wrapperProps={{ as: 'div', className: 'wrapper' }}
       />,
       {
         container: elem,
@@ -462,7 +465,7 @@ describe("With SSR", () => {
 
     await waitFor(() => getByText(clientSideText));
 
-    expect(elem.querySelector('div')).toBeTruthy();
+    expect(elem.querySelector('.wrapper')).toBeTruthy();
     expect(elem).toMatchSnapshot();
   });
 });
@@ -478,6 +481,7 @@ describe("Without SSR", () => {
     render(<ComponentWithHydrationOnDemandClient label={clientSideText} />, {
       container: elem,
       hydrate: true,
+      onRecoverableError: jest.fn(),
     });
 
     expect(elem).toMatchSnapshot();
@@ -494,6 +498,7 @@ describe("Without SSR", () => {
       {
         container: elem,
         hydrate: true,
+        onRecoverableError: jest.fn(),
       }
     );
 
