@@ -35,6 +35,8 @@
   <br />
 </div>
 
+[![Edit react-hydration-on-demand](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/stoic-sinoussi-64wys6)
+
 Hydrates server-side rendered components only when necessary to offload the main thread, improving TTI, TBT, and FID.
 It can be used with code-splitting libraries to load component code at runtime just before the hydration step, reducing the initial payload size of your application.
 
@@ -191,3 +193,9 @@ export default class App extends React.Component {
 ### `forceHydration: Boolean` (optional, default: false)
 
 Force the hydration of the component.
+
+## Playground & Bug Reproduction
+
+You can use the following CodeSandbox to try out the library or reproduce bugs. When creating a new issue, please fork this sandbox and include the link in your bug report to help me understand and fix the problem more efficiently.
+
+[![Edit react-hydration-on-demand](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/stoic-sinoussi-64wys6)
