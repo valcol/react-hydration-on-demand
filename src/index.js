@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import exenv from "exenv";
 
 const isClientSide = exenv.canUseDOM;
+const EMPTY_CONTENT = { __html: "" };
 
 const eventListenerOptions = {
     once: true,
@@ -180,7 +181,7 @@ const withHydrationOnDemandClientSide =
                 return (
                     <WrapperComponent
                         ref={rootRef}
-                        dangerouslySetInnerHTML={{ __html: "" }}
+                        dangerouslySetInnerHTML={EMPTY_CONTENT}
                         suppressHydrationWarning
                         {...wrapperPropsRest}
                     />

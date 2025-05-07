@@ -34,11 +34,16 @@ describe("With SSR", () => {
     const ComponentWithHydrationOnDemandClient =
       withHydrationOnDemand()(Component);
 
-    render(<ComponentWithHydrationOnDemandClient label={clientSideText} />, {
+    const { rerender, getByText } = render(<ComponentWithHydrationOnDemandClient label={clientSideText} />, {
       container: elem,
       hydrate: true,
     });
 
+    expect(getByText(serverSideText)).toBeTruthy();
+
+    rerender(<ComponentWithHydrationOnDemandClient label={clientSideText} />);
+
+    expect(getByText(serverSideText)).toBeTruthy();
     expect(elem).toMatchSnapshot();
   });
 
