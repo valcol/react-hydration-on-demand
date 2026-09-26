@@ -3,9 +3,17 @@
  */
 
 import React from "react";
+
 import { render, fireEvent, waitFor } from "@testing-library/react";
 
-import withHydrationOnDemand from "../../src";
+// Load the library as if running React < 18 to exercise the legacy code path.
+let withHydrationOnDemand;
+beforeAll(() => {
+  const actualVersion = React.version;
+  React.version = "17.0.2";
+  withHydrationOnDemand = require("../../src").default;
+  React.version = actualVersion;
+});
 
 const Component = ({ label }) => <div className="label">{label}</div>;
 const serverSideText = "some content server side";

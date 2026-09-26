@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Server side Wraps the component in a Suspense boundary 1`] = `"<section data-hydration-on-demand="true"><!--$--><div class="label">some content</div><!--/$--></section>"`;
+
+exports[`With SSR Keeps the server markup untouched until hydration 1`] = `
+<div>
+  <section
+    data-hydration-on-demand="true"
+  >
+    <!--$-->
+    <div
+      class="label"
+    >
+      some content
+    </div>
+    <!--/$-->
+  </section>
+</div>
+`;
+
+exports[`With SSR Supports a custom wrapper element 1`] = `
+<div>
+  <div
+    class="wrapper"
+    data-hydration-on-demand="true"
+  >
+    <!--$-->
+    <div
+      class="label"
+    >
+      some content
+    </div>
+    <!--/$-->
+  </div>
+</div>
+`;
+
+exports[`Without SSR Doesn't render with fallback disabled 1`] = `
+<div>
+  <section />
+</div>
+`;
+
+exports[`Without SSR Renders immediately 1`] = `
+<div>
+  <section>
+    <div
+      class="label"
+    >
+      client content
+    </div>
+  </section>
+</div>
+`;

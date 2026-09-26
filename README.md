@@ -101,6 +101,20 @@ export default class App extends React.Component {
 >
 > If the component isn't rendered server side, it will render directly and behave normally.
 
+## How hydration works
+
+### React 18+
+
+The component is rendered inside a `<Suspense>` boundary, which stays dehydrated until one of the `on` events fires. The server markup is then **hydrated in place**: the DOM nodes are kept, so focus, scroll position, media and CSS animations are preserved.
+
+- **The triggering event reaches your component.** When hydration is triggered by a DOM event on the component itself (e.g. `on: ["click"]`), React hydrates it synchronously and dispatches the event to it, so the first click works. This isn't possible when `onBefore` is set, as hydration has to wait for it.
+- **Props updates before hydration are safe.** Until hydration, the component keeps the props it was first rendered with (the ones matching the server markup). It is hydrated with them, then immediately re-rendered with the latest props.
+- **Context updates before hydration** (a context consumed inside the component changing before it's hydrated) make React discard the server markup and render the component from scratch, unless the update is wrapped in `startTransition`.
+
+### React 16 / 17
+
+The server markup is kept untouched until hydration, then the component is **rendered from scratch** client side: the DOM nodes are re-created, and the event triggering the hydration isn't received by the component.
+
 ## Options
 
 ### `on: Array`
@@ -156,6 +170,8 @@ Props that are applied to the div which wraps the provided component.
 #### `wrapperProps.as: String | React.ComponentType` (optional, default: 'section')
 
 Specifies the HTML element or React component to use as the wrapper. This allows for semantically correct and accessible markup. For example, use `'div'` for generic containers or `'a'` for links.
+
+A React component used as the wrapper must forward its `ref` and pass all the props it receives to the DOM element it renders.
 
 ```js
 import withHydrationOnDemand from "react-hydration-on-demand";
