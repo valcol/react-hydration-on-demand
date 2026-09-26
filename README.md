@@ -143,17 +143,6 @@ const CardWithHydrationOnDemand = withHydrationOnDemand({
 })(LoadableCard);
 ```
 
-### `whenInputPending: Boolean` (optional, default: false)
-
-When set to true use `navigator.scheduling.isInputPending` to check if there is a pending user input on mount. If that's the case, hydration will be delayed using the strategies defined in the `on` option to allow the browser to handle the user input.
-If there is no pending input, the component will be hydrated directly to be interactive as fast as possible.
-
-See https://github.com/WICG/is-input-pending for more infos.
-
-### `isInputPendingFallbackValue: Boolean` (optional, default: true)
-
-The default value returned on browsers who don't implements `navigator.scheduling.isInputPending` when `whenInputPending` set to true.
-
 ### `disableFallback: Boolean` (optional, default: false)
 
 If set at true the component will not be rendered client side if not rendered server side.

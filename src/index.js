@@ -28,10 +28,8 @@ const withHydrationOnDemandServerSide =
 const withHydrationOnDemandClientSide =
     ({
         disableFallback = false,
-        isInputPendingFallbackValue = true,
         on = [],
         onBefore,
-        whenInputPending = false,
     }) =>
     (WrappedComponent) => {
         const WithHydrationOnDemand = ({
@@ -43,19 +41,8 @@ const withHydrationOnDemandClientSide =
             const rootRef = useRef(null);
             const cleanupFunctions = useRef([]);
 
-            const isInputPending = () => {
-                const isInputPending =
-                    navigator?.scheduling?.isInputPending?.();
-                return isInputPending ?? isInputPendingFallbackValue;
-            };
-
-            const getDefaultHydrationState = () => {
-                const isNotInputPending = whenInputPending && !isInputPending();
-                return (isNotInputPending || forceHydration) && !onBefore;
-            };
-
             const [isHydrated, setIsHydrated] = useState(
-                getDefaultHydrationState()
+                forceHydration && !onBefore
             );
 
             const cleanUp = () => {

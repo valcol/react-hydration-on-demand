@@ -20,6 +20,9 @@ var _excluded = ["wrapperProps"],
   _excluded4 = ["as"];
 function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, "default": e }; if (null === e || "object" != _typeof(e) && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (var _t in e) "default" !== _t && {}.hasOwnProperty.call(e, _t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, _t)) && (i.get || i.set) ? o(f, _t, i) : f[_t] = e[_t]); return f; })(e, t); }
 var isClientSide = _exenv["default"].canUseDOM;
+var EMPTY_CONTENT = {
+  __html: ""
+};
 var eventListenerOptions = {
   once: true,
   capture: true,
@@ -45,13 +48,9 @@ var withHydrationOnDemandServerSide = function withHydrationOnDemandServerSide(W
 var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_ref3) {
   var _ref3$disableFallback = _ref3.disableFallback,
     disableFallback = _ref3$disableFallback === void 0 ? false : _ref3$disableFallback,
-    _ref3$isInputPendingF = _ref3.isInputPendingFallbackValue,
-    isInputPendingFallbackValue = _ref3$isInputPendingF === void 0 ? true : _ref3$isInputPendingF,
     _ref3$on = _ref3.on,
     on = _ref3$on === void 0 ? [] : _ref3$on,
-    onBefore = _ref3.onBefore,
-    _ref3$whenInputPendin = _ref3.whenInputPending,
-    whenInputPending = _ref3$whenInputPendin === void 0 ? false : _ref3$whenInputPendin;
+    onBefore = _ref3.onBefore;
   return function (WrappedComponent) {
     var WithHydrationOnDemand = function WithHydrationOnDemand(_ref4) {
       var _ref4$forceHydration = _ref4.forceHydration,
@@ -65,16 +64,7 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
         wrapperPropsRest = (0, _objectWithoutProperties2["default"])(_ref5, _excluded4);
       var rootRef = (0, _react.useRef)(null);
       var cleanupFunctions = (0, _react.useRef)([]);
-      var isInputPending = function isInputPending() {
-        var _navigator, _navigator$isInputPen;
-        var isInputPending = (_navigator = navigator) === null || _navigator === void 0 || (_navigator = _navigator.scheduling) === null || _navigator === void 0 || (_navigator$isInputPen = _navigator.isInputPending) === null || _navigator$isInputPen === void 0 ? void 0 : _navigator$isInputPen.call(_navigator);
-        return isInputPending !== null && isInputPending !== void 0 ? isInputPending : isInputPendingFallbackValue;
-      };
-      var getDefaultHydrationState = function getDefaultHydrationState() {
-        var isNotInputPending = whenInputPending && !isInputPending();
-        return (isNotInputPending || forceHydration) && !onBefore;
-      };
-      var _useState = (0, _react.useState)(getDefaultHydrationState()),
+      var _useState = (0, _react.useState)(forceHydration && !onBefore),
         _useState2 = (0, _slicedToArray2["default"])(_useState, 2),
         isHydrated = _useState2[0],
         setIsHydrated = _useState2[1];
@@ -203,9 +193,7 @@ var withHydrationOnDemandClientSide = function withHydrationOnDemandClientSide(_
       }, []);
       if (!isHydrated) return /*#__PURE__*/_react["default"].createElement(WrapperComponent, (0, _extends2["default"])({
         ref: rootRef,
-        dangerouslySetInnerHTML: {
-          __html: ""
-        },
+        dangerouslySetInnerHTML: EMPTY_CONTENT,
         suppressHydrationWarning: true
       }, wrapperPropsRest));
       return /*#__PURE__*/_react["default"].createElement(WrapperComponent, wrapperPropsRest, /*#__PURE__*/_react["default"].createElement(WrappedComponent, props));
