@@ -107,6 +107,8 @@ export default class App extends React.Component {
 
 The component is rendered inside a `<Suspense>` boundary, which stays dehydrated until one of the `on` events fires. The server markup is then **hydrated in place**: the DOM nodes are kept, so focus, scroll position, media and CSS animations are preserved.
 
+> **Your app must be hydrated with `hydrateRoot`.** With the legacy `ReactDOM.hydrate` API, React 18 can't keep a Suspense boundary dehydrated: the server markup is removed on load, the component stays empty until one of the `on` events fires, and it is then rendered from scratch.
+
 - **The triggering event reaches your component.** When hydration is triggered by a DOM event on the component itself (e.g. `on: ["click"]`), React hydrates it synchronously and dispatches the event to it, so the first click works. This isn't possible when `onBefore` is set, as hydration has to wait for it.
 - **Props updates before hydration are safe.** Until hydration, the component keeps the props it was first rendered with (the ones matching the server markup). It is hydrated with them, then immediately re-rendered with the latest props.
 - **Context updates before hydration** (a context consumed inside the component changing before it's hydrated) make React discard the server markup and render the component from scratch, unless the update is wrapped in `startTransition`.

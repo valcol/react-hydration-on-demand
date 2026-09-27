@@ -24,6 +24,9 @@ function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r
 var isClientSide = _exenv["default"].canUseDOM;
 // React 18+ can keep a Suspense boundary dehydrated and hydrate it later in
 // place, so the server markup is reused instead of being re-created.
+// This requires a root created with `hydrateRoot`: a legacy `ReactDOM.hydrate`
+// root can't keep the boundary dehydrated and would drop the server markup.
+// There's no public API to detect the root type, so this is documented instead.
 var supportsSuspenseHydration = parseInt(_react["default"].version, 10) >= 18;
 var EMPTY_CONTENT = {
   __html: ""

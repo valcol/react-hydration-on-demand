@@ -4,6 +4,9 @@ import exenv from "exenv";
 const isClientSide = exenv.canUseDOM;
 // React 18+ can keep a Suspense boundary dehydrated and hydrate it later in
 // place, so the server markup is reused instead of being re-created.
+// This requires a root created with `hydrateRoot`: a legacy `ReactDOM.hydrate`
+// root can't keep the boundary dehydrated and would drop the server markup.
+// There's no public API to detect the root type, so this is documented instead.
 const supportsSuspenseHydration = parseInt(React.version, 10) >= 18;
 const EMPTY_CONTENT = { __html: "" };
 
