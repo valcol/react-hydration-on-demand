@@ -118,9 +118,13 @@ const withHydrationOnDemandClientSide =
                 }
 
                 const options = getOptions();
-                const observer = new IntersectionObserver(([entry]) => {
-                    if (!entry.isIntersecting || !(entry.intersectionRatio > 0))
-                        return;
+                const observer = new IntersectionObserver((entries) => {
+                    // A single callback can batch several entries for the target, e.g. the
+                    // initial non-intersecting one and an intersecting one after a quick scroll.
+                    const isVisible = entries.some(
+                        (entry) => entry.isIntersecting && entry.intersectionRatio > 0
+                    );
+                    if (!isVisible) return;
 
                     hydrate();
                 }, options);
