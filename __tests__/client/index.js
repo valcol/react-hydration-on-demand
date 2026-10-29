@@ -363,6 +363,42 @@ describe("With SSR", () => {
     expect(disconnect).toHaveBeenCalled();
   });
 
+  test("Render correctly client side, on visible, batched entries ending visible", async () => {
+    const elem = document.createElement("div");
+    elem.innerHTML = SSRhtml;
+
+    window.IntersectionObserver = class IntersectionObserver {
+      constructor(cb) {
+        this.cb = cb;
+      }
+      observe() {
+        // the initial not-intersecting entry and a later intersecting one, delivered together
+        this.cb(
+          [
+            { isIntersecting: false, intersectionRatio: 0 },
+            { isIntersecting: true, intersectionRatio: 0.5 },
+          ],
+          this
+        );
+      }
+      disconnect() {}
+    };
+
+    const ComponentWithHydrationOnDemandClient = withHydrationOnDemand({
+      on: ["visible"],
+    })(Component);
+
+    const { getByText } = render(
+      <ComponentWithHydrationOnDemandClient label={clientSideText} />,
+      {
+        container: elem,
+        hydrate: true,
+      }
+    );
+
+    await waitFor(() => getByText(clientSideText));
+  });
+
   test("Client side, execute onBefore before hydration", async () => {
     const elem = document.createElement("div");
     elem.innerHTML = SSRhtml;
